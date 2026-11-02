@@ -2,7 +2,7 @@ import { api } from '../lib/api.js';
 import { $, esc, applyCss, toast, stateBlock, banner } from '../lib/ui.js';
 import { requireSession, state } from '../lib/session.js';
 import { mountShell } from '../lib/shell.js';
-import { loadOverview, lastLocation, rememberLocation, guessLocation } from '../lib/weatherData.js';
+import { loadOverview, lastLocation, rememberLocation, guessLocation, currentLocation } from '../lib/weatherData.js';
 import { renderSky, renderTimeline, renderWeek, renderHighlights } from '../lib/views.js';
 import { renderCharts } from '../lib/charts.js';
 import { localNow, timeAgo } from '../lib/format.js';
@@ -21,7 +21,7 @@ function fromUrl() {
 }
 
 async function resolveStart() {
-  return fromUrl() || state.prefs.defaultLocation || lastLocation() || (await guessLocation());
+  return fromUrl() || state.prefs.defaultLocation || lastLocation() || (await currentLocation()) || (await guessLocation());
 }
 
 function skeleton() {

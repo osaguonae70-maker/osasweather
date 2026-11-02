@@ -22,3 +22,20 @@ export async function guessLocation() {
   } catch { /* fall through */ }
   return null;
 }
+
+export function currentLocation() {
+  return new Promise((resolve) => {
+    if (!navigator.geolocation) { resolve(null); return; }
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => resolve({
+        name: 'Current location',
+        country: null,
+        region: null,
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+      }),
+      () => resolve(null),
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
+    );
+  });
+}

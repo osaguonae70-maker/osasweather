@@ -4,7 +4,7 @@ import { mountThemeMenu } from '../lib/theme.js';
 import { mountSearch } from '../lib/search.js';
 import { mountBurger } from '../lib/nav.js';
 import { loadSession, state, hasSessionHint } from '../lib/session.js';
-import { loadOverview, lastLocation, rememberLocation, guessLocation } from '../lib/weatherData.js';
+import { loadOverview, lastLocation, rememberLocation, guessLocation, currentLocation } from '../lib/weatherData.js';
 import { renderSky } from '../lib/views.js';
 import { clockLabel, windUnit, speed, pct } from '../lib/format.js';
 import { esc } from '../lib/ui.js';
@@ -43,7 +43,7 @@ mountSearch({ input: $('input', hero), list: $('.osw-results', hero), spinner: $
       $('[data-cta-secondary]').hidden = true;
     }
   } catch { /* offline: stay in visitor mode */ }
-  const start = (signedIn && state.prefs.defaultLocation) || lastLocation() || (await guessLocation());
+  const start = (signedIn && state.prefs.defaultLocation) || (await currentLocation()) || lastLocation() || (await guessLocation());
   if (start) showPreview(start);
   else preview.innerHTML = '<div class="osw-panel osw-state"><i class="bi bi-search" aria-hidden="true"></i><h2>Search to see a live forecast</h2><p class="osw-muted">Type a city above and the current conditions appear here.</p></div>';
 })();
