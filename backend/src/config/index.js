@@ -85,7 +85,13 @@ function loadConfig(env = process.env) {
     throw new Error(`Invalid configuration:\n - ${errors.join('\n - ')}`);
   }
 
-  cfg.allowedOrigins = [...new Set([cfg.frontendUrl, cfg.adminFrontendUrl, ...list(env.EXTRA_ALLOWED_ORIGINS)])];
+  cfg.allowedOrigins = [...new Set([
+    cfg.frontendUrl,
+    cfg.adminFrontendUrl,
+    'https://osasweather-weather-di9zi465i-osaguonae70-4339s-projects.vercel.app',
+    'https://osasweather-weather-4suy1ouno-osaguonae70-4339s-projects.vercel.app',
+    ...list(env.EXTRA_ALLOWED_ORIGINS)
+  ])];
   return cfg;
 }
 
