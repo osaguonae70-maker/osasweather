@@ -90,6 +90,7 @@ function loadConfig(env = process.env) {
     cfg.adminFrontendUrl,
     'https://osasweather-weather-di9zi465i-osaguonae70-4339s-projects.vercel.app',
     'https://osasweather-weather-4suy1ouno-osaguonae70-4339s-projects.vercel.app',
+    'https://osasweather-admin-app.vercel.app',
     ...list(env.EXTRA_ALLOWED_ORIGINS)
   ])];
   return cfg;
