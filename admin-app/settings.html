@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Settings · OsasWeather Admin</title>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/bootstrap-icons.min.css">
+<link rel="stylesheet" href="assets/css/tailwind.min.css">
+<link rel="stylesheet" href="assets/css/admin.css">
+<script src="assets/js/config.js"></script>
+<script src="assets/js/theme-init.js"></script>
+</head>
+<body>
+<a class="adm-skip" href="#main">Skip to content</a>
+<div class="adm-app">
+  <aside class="adm-side" data-side aria-label="Admin navigation"></aside>
+  <main class="adm-main" id="main">
+    <div class="adm-top"><div class="d-flex align-items-center gap-2"><button type="button" class="btn btn-line adm-menu-btn" data-menu aria-label="Open menu" aria-expanded="false"><i class="bi bi-list" aria-hidden="true"></i></button><h1>Settings</h1></div><div class="tools" data-tools></div></div>
+    <div class="row g-3"><div class="col-xl-6">
+  <section class="adm-panel" aria-labelledby="s1"><div class="adm-ph"><div><h2 id="s1">Application settings</h2><p>Applied immediately to the public app through the shared backend.</p></div></div>
+    <div data-banner="settings" hidden></div>
+    <form data-form="settings" novalidate>
+      <div class="mb-3 adm-switch"><input type="checkbox" id="registrationsOpen" name="registrationsOpen"><label for="registrationsOpen"><b>Allow new registrations</b><div class="adm-hint">Turn off to stop new sign-ups. Existing users are not affected.</div></label></div>
+      <div class="mb-3"><label class="form-label" for="weatherCacheMinutes">Weather cache lifetime (minutes)</label><input class="form-control tw-max-w-xs" id="weatherCacheMinutes" name="weatherCacheMinutes" type="number" min="5" max="60" step="1" required><div class="adm-hint">Between 5 and 60. Longer means fewer calls to Open-Meteo.</div><div class="adm-err" data-error-for="weatherCacheMinutes" role="alert"></div></div>
+      <button class="btn btn-primary-adm" type="submit">Save settings</button>
+    </form></section></div>
+  <div class="col-xl-6"><section class="adm-panel" aria-labelledby="s2"><div class="adm-ph"><div><h2 id="s2">Change owner password</h2><p>Signs out every other admin session.</p></div></div>
+    <div data-banner="password" hidden></div>
+    <form data-form="password" novalidate>
+      <div class="mb-3"><label class="form-label" for="currentPassword">Current password</label><div class="adm-pw"><input class="form-control" id="currentPassword" name="currentPassword" type="password" autocomplete="current-password" required maxlength="128"><button type="button" data-toggle-pw aria-label="Show password"><i class="bi bi-eye" aria-hidden="true"></i></button></div><div class="adm-err" data-error-for="currentPassword" role="alert"></div></div>
+      <div class="mb-3"><label class="form-label" for="newPassword">New password (12+ characters recommended)</label><div class="adm-pw"><input class="form-control" id="newPassword" name="newPassword" type="password" autocomplete="new-password" required maxlength="128"><button type="button" data-toggle-pw aria-label="Show password"><i class="bi bi-eye" aria-hidden="true"></i></button></div><div class="adm-err" data-error-for="newPassword" role="alert"></div></div>
+      <div class="mb-3"><label class="form-label" for="confirmPassword">Confirm new password</label><div class="adm-pw"><input class="form-control" id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" required maxlength="128"><button type="button" data-toggle-pw aria-label="Show password"><i class="bi bi-eye" aria-hidden="true"></i></button></div><div class="adm-err" data-error-for="confirmPassword" role="alert"></div></div>
+      <button class="btn btn-primary-adm" type="submit">Update password</button>
+    </form></section></div></div>
+  </main>
+</div>
+<script type="module" src="assets/js/pages/settings.js"></script>
+</body></html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Create your account · OsasWeather</title>
+<meta name="description" content="Create a free OsasWeather account.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0e1b2c">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+<link rel="preload" href="assets/fonts/sora-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/bootstrap-icons.min.css">
+<link rel="stylesheet" href="assets/css/tailwind.min.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<script src="assets/js/config.js"></script>
+<script src="assets/js/theme-init.js"></script>
+</head>
+<body>
+<div class="osw-auth">
+  <div class="osw-auth-form">
+    <header><a class="osw-brand" href="index.html"><img src="assets/images/logo-icon.svg" alt="" width="34" height="34"><span><b>Osas</b><span>Weather</span></span></a></header>
+    <main id="main" class="inner">
+      <h1>Create your account</h1>
+      <p class="osw-muted">Save favourite places and keep your settings on every device.</p>
+      <div data-banner hidden></div>
+      <form data-form novalidate class="tw-mt-4">
+        <div class="mb-3"><label class="form-label" for="fullName">Full name</label>
+          <input class="form-control" id="fullName" name="fullName" type="text" autocomplete="name" required maxlength="100">
+          <div class="osw-field-error" data-error-for="fullName" role="alert"></div></div>
+        <div class="mb-3"><label class="form-label" for="email">Email address</label>
+          <input class="form-control" id="email" name="email" type="email" autocomplete="email" required maxlength="254" inputmode="email">
+          <div class="osw-field-error" data-error-for="email" role="alert"></div></div>
+      <div class="mb-3">
+        <label class="form-label" for="password">Password</label>
+        <div class="osw-pw"><input class="form-control" id="password" name="password" type="password" autocomplete="new-password" required maxlength="128">
+          <button type="button" data-toggle-pw aria-label="Show password" aria-pressed="false"><i class="bi bi-eye" aria-hidden="true"></i></button></div>
+        <div class="osw-field-error" data-error-for="password" role="alert"></div><div class="osw-meter" data-score="0" data-meter aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="osw-hint" data-strength-hint>Use at least 10 characters with a letter and a number.</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="confirmPassword">Confirm password</label>
+        <div class="osw-pw"><input class="form-control" id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" required maxlength="128">
+          <button type="button" data-toggle-pw aria-label="Show password" aria-pressed="false"><i class="bi bi-eye" aria-hidden="true"></i></button></div>
+        <div class="osw-field-error" data-error-for="confirmPassword" role="alert"></div>
+      </div>
+        <div class="mb-4"><label class="osw-check"><input type="checkbox" name="acceptTerms" required><span>I agree to the <a href="terms.html" target="_blank" rel="noopener">Terms and Conditions</a></span></label>
+          <div class="osw-field-error" data-error-for="acceptTerms" role="alert"></div></div>
+        <button class="btn btn-sun w-100" type="submit">Create account</button>
+      </form>
+      <p class="osw-muted tw-mt-4 mb-0">Already have an account? <a href="login.html">Log in</a></p>
+    </main>
+  </div>
+  <aside class="osw-auth-side" aria-hidden="true"><div data-side-icon></div><h2>Your forecast, your way.</h2><p>One free account for favourites, units and theme.</p></aside>
+</div>
+<script type="module" src="assets/js/pages/register.js"></script>
+</body></html>

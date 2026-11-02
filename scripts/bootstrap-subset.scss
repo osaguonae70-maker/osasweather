@@ -1,0 +1,28 @@
+// Only the Bootstrap 5 parts OsasWeather uses: reboot, containers, grid, forms, buttons, utilities.
+// No Bootstrap JavaScript is used anywhere (dialogs, menus and toasts are small native modules).
+$enable-shadows: false;
+$enable-gradients: false;
+$enable-rfs: false;
+$enable-smooth-scroll: false;
+$font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+$font-size-base: 1rem;
+$body-bg: transparent;
+$link-decoration: none;
+$btn-border-radius: .65rem;
+$input-border-radius: .65rem;
+$input-btn-focus-width: .2rem;
+
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+@import "bootstrap/scss/forms";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/helpers/visually-hidden";
+@import "bootstrap/scss/utilities/api";

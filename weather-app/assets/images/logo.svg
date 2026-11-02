@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 296 64" role="img" aria-label="OsasWeather"><title>OsasWeather</title>
+  <circle cx="32" cy="32" r="24" fill="none" stroke="#2E6FF2" stroke-width="7" stroke-linecap="round" stroke-dasharray="112 38.8" transform="rotate(181.5 32 32)"/>
+  <g fill="#FFB020" stroke="#FFB020" stroke-linecap="round">
+    <circle cx="41" cy="25" r="7.5" stroke="none"/>
+    <path d="M41 11.5v2.2M52.5 25h-2.2M49.2 16.8l-1.6 1.6M32.8 16.8l1.6 1.6" stroke-width="2.4" fill="none"/>
+  </g>
+  <g fill="#8FA6C4">
+    <circle cx="21" cy="44" r="6.5"/><circle cx="29.5" cy="38.5" r="8.5"/><circle cx="38" cy="44" r="6.5"/>
+    <rect x="14.5" y="43" width="30" height="7.5" rx="3.75"/>
+  </g>
+  <text x="76" y="43" font-family="Sora, system-ui, sans-serif" font-size="30" fill="#0E1B2C"><tspan font-weight="700">Osas</tspan><tspan font-weight="300">Weather</tspan></text>
+</svg>

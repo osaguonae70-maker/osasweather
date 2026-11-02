@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Public pages only. Replace the host with your production domain. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://osasweather.com/</loc></url>
+  <url><loc>https://osasweather.com/login.html</loc></url>
+  <url><loc>https://osasweather.com/register.html</loc></url>
+  <url><loc>https://osasweather.com/terms.html</loc></url>
+</urlset>

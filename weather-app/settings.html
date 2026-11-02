@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Settings · OsasWeather</title>
+<meta name="description" content="OsasWeather">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0e1b2c">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+<link rel="preload" href="assets/fonts/sora-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/bootstrap-icons.min.css">
+<link rel="stylesheet" href="assets/css/tailwind.min.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<script src="assets/js/config.js"></script>
+<script src="assets/js/theme-init.js"></script>
+</head>
+<body>
+<main id="main" class="container osw-page">
+  <h1>Settings</h1><p class="osw-muted">Changes save automatically and apply on every device you sign in on.</p>
+  <section class="osw-form-card" aria-labelledby="pref-h"><h2 id="pref-h" class="visually-hidden">Preferences</h2>
+    <div class="osw-setting"><div class="lbl"><b id="l-theme">Theme</b><span>Light, dark, or follow your device.</span></div>
+      <div class="osw-seg" role="radiogroup" aria-labelledby="l-theme" data-seg="theme"><button type="button" role="radio" aria-checked="false" data-v="light"><i class="bi bi-sun" aria-hidden="true"></i>Light</button><button type="button" role="radio" aria-checked="false" data-v="dark"><i class="bi bi-moon-stars" aria-hidden="true"></i>Dark</button><button type="button" role="radio" aria-checked="false" data-v="system"><i class="bi bi-circle-half" aria-hidden="true"></i>System</button></div></div>
+    <div class="osw-setting"><div class="lbl"><b id="l-temp">Temperature</b><span>Used for every forecast.</span></div>
+      <div class="osw-seg" role="radiogroup" aria-labelledby="l-temp" data-seg="temperatureUnit"><button type="button" role="radio" aria-checked="false" data-v="celsius">Celsius (°C)</button><button type="button" role="radio" aria-checked="false" data-v="fahrenheit">Fahrenheit (°F)</button></div></div>
+    <div class="osw-setting"><div class="lbl"><b id="l-wind">Wind speed</b><span>Wind and gust readings.</span></div>
+      <div class="osw-seg" role="radiogroup" aria-labelledby="l-wind" data-seg="windSpeedUnit"><button type="button" role="radio" aria-checked="false" data-v="kmh">km/h</button><button type="button" role="radio" aria-checked="false" data-v="mph">mph</button><button type="button" role="radio" aria-checked="false" data-v="ms">m/s</button><button type="button" role="radio" aria-checked="false" data-v="kn">knots</button></div></div>
+    <div class="osw-setting"><div class="lbl"><b>Default location</b><span data-default-label>Loading…</span></div>
+      <div class="tw-w-full sm:tw-w-80" data-default-box><div class="osw-search"><i class="bi bi-search osw-search-ico" aria-hidden="true"></i><label class="visually-hidden" for="def-q">Search for a default location</label><input id="def-q" type="search" class="form-control" placeholder="Search a city" maxlength="100"><span class="osw-search-spin" hidden></span><div class="osw-results" hidden></div></div>
+        <button type="button" class="btn btn-ghost btn-sm tw-mt-2" data-clear-default hidden>Clear default location</button></div></div>
+  </section>
+</main>
+<script type="module" src="assets/js/pages/settings.js"></script>
+</body></html>

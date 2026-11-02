@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Profile · OsasWeather</title>
+<meta name="description" content="OsasWeather">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0e1b2c">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+<link rel="preload" href="assets/fonts/sora-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/bootstrap-icons.min.css">
+<link rel="stylesheet" href="assets/css/tailwind.min.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<script src="assets/js/config.js"></script>
+<script src="assets/js/theme-init.js"></script>
+</head>
+<body>
+<main id="main" class="container osw-page">
+  <h1>Profile</h1>
+  <div class="row g-4"><div class="col-lg-5">
+    <section class="osw-form-card osw-account" aria-labelledby="acc-h"><h2 id="acc-h">Account</h2>
+      <dl><dt>Name</dt><dd data-acc="name">…</dd><dt>Email</dt><dd data-acc="email">…</dd><dt>Email status</dt><dd data-acc="verified">…</dd><dt>Member since</dt><dd data-acc="since">…</dd></dl>
+      <hr><button class="btn btn-ghost" data-logout><i class="bi bi-box-arrow-right" aria-hidden="true"></i>Log out</button></section>
+  </div><div class="col-lg-7">
+    <section class="osw-form-card" aria-labelledby="name-h"><h2 id="name-h">Edit name</h2><div data-banner="name" hidden></div>
+      <form data-form="name" novalidate><div class="mb-3"><label class="form-label" for="fullName">Full name</label><input class="form-control" id="fullName" name="fullName" autocomplete="name" required maxlength="100"><div class="osw-field-error" data-error-for="fullName" role="alert"></div></div><button class="btn btn-sun" type="submit">Save name</button></form></section>
+    <section class="osw-form-card" aria-labelledby="email-h"><h2 id="email-h">Change email</h2><p class="osw-muted">We send a confirmation link to the new address. Your email only changes after you open it.</p><div data-banner="email" hidden></div>
+      <form data-form="email" novalidate><div class="mb-3"><label class="form-label" for="newEmail">New email address</label><input class="form-control" id="newEmail" name="newEmail" type="email" autocomplete="email" required maxlength="254"><div class="osw-field-error" data-error-for="newEmail" role="alert"></div></div>
+      <div class="mb-3">
+        <label class="form-label" for="emailPassword">Current password</label>
+        <div class="osw-pw"><input class="form-control" id="emailPassword" name="password" type="password" autocomplete="current-password" required maxlength="128">
+          <button type="button" data-toggle-pw aria-label="Show password" aria-pressed="false"><i class="bi bi-eye" aria-hidden="true"></i></button></div>
+        <div class="osw-field-error" data-error-for="password" role="alert"></div>
+      </div>
+      <button class="btn btn-sun" type="submit">Send confirmation link</button></form></section>
+    <section class="osw-form-card" aria-labelledby="pw-h"><h2 id="pw-h">Change password</h2><p class="osw-muted">Changing your password signs you out on your other devices.</p><div data-banner="password" hidden></div>
+      <form data-form="password" novalidate>
+      <div class="mb-3">
+        <label class="form-label" for="currentPassword">Current password</label>
+        <div class="osw-pw"><input class="form-control" id="currentPassword" name="currentPassword" type="password" autocomplete="current-password" required maxlength="128">
+          <button type="button" data-toggle-pw aria-label="Show password" aria-pressed="false"><i class="bi bi-eye" aria-hidden="true"></i></button></div>
+        <div class="osw-field-error" data-error-for="currentPassword" role="alert"></div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="newPassword">New password</label>
+        <div class="osw-pw"><input class="form-control" id="newPassword" name="newPassword" type="password" autocomplete="new-password" required maxlength="128">
+          <button type="button" data-toggle-pw aria-label="Show password" aria-pressed="false"><i class="bi bi-eye" aria-hidden="true"></i></button></div>
+        <div class="osw-field-error" data-error-for="newPassword" role="alert"></div><div class="osw-meter" data-score="0" data-meter aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="osw-hint" data-strength-hint>Use at least 10 characters with a letter and a number.</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="confirmPassword">Confirm new password</label>
+        <div class="osw-pw"><input class="form-control" id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" required maxlength="128">
+          <button type="button" data-toggle-pw aria-label="Show password" aria-pressed="false"><i class="bi bi-eye" aria-hidden="true"></i></button></div>
+        <div class="osw-field-error" data-error-for="confirmPassword" role="alert"></div>
+      </div>
+      <button class="btn btn-sun" type="submit">Update password</button></form></section>
+  </div></div>
+</main>
+<script type="module" src="assets/js/pages/profile.js"></script>
+</body></html>

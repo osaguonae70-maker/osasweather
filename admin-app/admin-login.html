@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sign in · OsasWeather Admin</title>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/bootstrap-icons.min.css">
+<link rel="stylesheet" href="assets/css/tailwind.min.css">
+<link rel="stylesheet" href="assets/css/admin.css">
+<script src="assets/js/config.js"></script>
+<script src="assets/js/theme-init.js"></script>
+</head>
+<body class="adm-login">
+<main class="adm-login-card" id="main">
+  <a class="adm-brand" href="admin-login.html"><img src="assets/images/logo-icon.svg" alt="" width="32" height="32"><span><b>Osas</b><span>Weather</span></span><span class="adm-badge-admin">Admin</span></a>
+  <h1>Owner sign-in</h1>
+  <p class="adm-muted">Authorized personnel only. Access is logged.</p>
+  <div data-banner hidden></div>
+  <form data-form novalidate class="tw-mt-3">
+    <div class="mb-3"><label class="form-label" for="email">Email</label><input class="form-control" id="email" name="email" type="email" autocomplete="username" required maxlength="254"><div class="adm-err" data-error-for="email" role="alert"></div></div>
+    <div class="mb-3"><label class="form-label" for="password">Password</label><div class="adm-pw"><input class="form-control" id="password" name="password" type="password" autocomplete="current-password" required maxlength="128"><button type="button" data-toggle-pw aria-label="Show password"><i class="bi bi-eye" aria-hidden="true"></i></button></div><div class="adm-err" data-error-for="password" role="alert"></div></div>
+    <button class="btn btn-primary-adm w-100" type="submit">Sign in</button>
+  </form>
+</main>
+<script type="module" src="assets/js/pages/login.js"></script>
+</body></html>

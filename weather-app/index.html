@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OsasWeather · Know your weather. Plan your world.</title>
+<meta name="description" content="Accurate forecasts, hourly and seven-day outlooks, and worldwide location search with OsasWeather.">
+<meta name="theme-color" content="#0e1b2c">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+<link rel="preload" href="assets/fonts/sora-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/bootstrap-icons.min.css">
+<link rel="stylesheet" href="assets/css/tailwind.min.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<script src="assets/js/config.js"></script>
+<script src="assets/js/theme-init.js"></script>
+<meta property="og:title" content="OsasWeather">
+<meta property="og:description" content="Know your weather. Plan your world.">
+</head>
+<body>
+<a class="osw-skip" href="#main">Skip to content</a>
+<header class="osw-topbar" id="top"><div class="container">
+  <div class="osw-bar">
+    <a class="osw-brand" href="index.html"><img src="assets/images/logo-icon.svg" alt="" width="34" height="34"><span><b>Osas</b><span>Weather</span></span></a>
+    <ul class="osw-links" aria-label="Main">
+      <li><a href="#top" aria-current="page">Home</a></li><li><a href="#features">Features</a></li><li><a href="#about">About</a></li>
+    </ul>
+    <div class="osw-actions">
+      <div data-theme-host></div>
+      <span class="d-flex gap-2 osw-hide-sm" data-auth-links><a class="btn btn-ghost btn-sm" href="login.html">Log in</a><a class="btn btn-sun btn-sm" href="register.html">Get started</a></span>
+      <button type="button" class="osw-iconbtn osw-burger" data-burger aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav"><i class="bi bi-list" aria-hidden="true"></i></button>
+    </div>
+  </div>
+  <nav class="osw-mobile-panel" id="mobile-nav" aria-label="Mobile"><a href="#top">Home</a><a href="#features">Features</a><a href="#about">About</a><a href="login.html">Log in</a><a class="btn btn-sun" href="register.html">Get started</a></nav>
+</div></header>
+
+<main id="main">
+<section class="osw-hero"><div class="container"><div class="osw-hero-grid">
+  <div>
+    <h1>Know your weather. Plan your world.</h1>
+    <p class="lead">Stay ahead of changing weather conditions with accurate forecasts, real-time updates, and personalized weather insights wherever life takes you.</p>
+    <form class="osw-search" role="search" data-hero-search>
+      <label class="visually-hidden" for="hero-q">Search for a city</label>
+      <i class="bi bi-search osw-search-ico" aria-hidden="true"></i>
+      <input id="hero-q" type="search" class="form-control" placeholder="Search a city, e.g. Lagos, Lisbon, Lima" maxlength="100">
+      <span class="osw-search-spin" hidden></span><div class="osw-results" hidden></div>
+    </form>
+    <div class="osw-hero-cta">
+      <a class="btn btn-sun" href="register.html" data-cta-primary>Get started</a>
+      <a class="btn btn-ghost" href="login.html" data-cta-secondary>Log in</a>
+    </div>
+  </div>
+  <div class="osw-preview" data-preview aria-live="polite"><div class="osw-skel osw-skel-sky" aria-hidden="true"></div></div>
+</div></div></section>
+
+<div class="container">
+<section class="osw-features" id="features" aria-labelledby="features-h">
+  <h2 id="features-h">Everything you need before you step outside</h2>
+  <div>
+    <div class="osw-feat"><i class="bi bi-thermometer-half" aria-hidden="true"></i><div><h3>Real-time weather</h3><p>Current temperature, feels-like, wind, humidity, pressure, visibility and UV, straight from the forecast model.</p></div></div>
+    <div class="osw-feat"><i class="bi bi-clock-history" aria-hidden="true"></i><div><h3>Hourly forecasts</h3><p>A scrollable timeline with the temperature curve, chance of rain and wind for the next day or two.</p></div></div>
+    <div class="osw-feat"><i class="bi bi-calendar-week" aria-hidden="true"></i><div><h3>Seven-day forecasts</h3><p>Highs and lows drawn on a shared scale, so you can compare the week at a glance.</p></div></div>
+    <div class="osw-feat"><i class="bi bi-globe-europe-africa" aria-hidden="true"></i><div><h3>Worldwide location search</h3><p>Find any city on Earth. Places that share a name show their region and country so you pick the right one.</p></div></div>
+    <div class="osw-feat"><i class="bi bi-star" aria-hidden="true"></i><div><h3>Favourite locations</h3><p>Save the places you care about and see their conditions together on one page.</p></div></div>
+    <div class="osw-feat"><i class="bi bi-graph-up" aria-hidden="true"></i><div><h3>Weather insights</h3><p>Charts for temperature trends, precipitation chances and wind, built from the same live data.</p></div></div>
+    <div class="osw-feat"><i class="bi bi-sliders" aria-hidden="true"></i><div><h3>Personalized settings</h3><p>Choose Celsius or Fahrenheit, your wind unit, a default location and a light, dark or system theme. Your choices follow you across devices.</p></div></div>
+  </div>
+</section>
+
+<section class="osw-steps" id="how" aria-labelledby="how-h">
+  <div class="head"><h2 id="how-h">How it works</h2></div>
+  <div class="osw-step"><h3>Search for a place</h3><p>Type a city name and pick the right match from the suggestions.</p></div>
+  <div class="osw-step"><h3>Read the forecast</h3><p>See the current conditions first, then the next hours and the days ahead.</p></div>
+  <div class="osw-step"><h3>Save and personalise</h3><p>Create a free account to keep favourites and set your preferred units and theme.</p></div>
+</section>
+
+<section class="osw-about" id="about" aria-labelledby="about-h">
+  <h2 id="about-h">About OsasWeather</h2>
+  <div class="osw-prose">
+    <p>OsasWeather is a weather platform built for clarity: the current conditions come first, and everything else is arranged so it is easy to read on a phone, a laptop or a large screen.</p>
+    <p>Forecast data and place search are provided by <a href="https://open-meteo.com/" rel="noopener noreferrer" target="_blank">Open-Meteo.com</a> under the <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener noreferrer" target="_blank">CC BY 4.0</a> licence. When data is not available we show that it is not available, never a made-up number.</p>
+  </div>
+</section>
+
+<section class="osw-cta" aria-labelledby="cta-h">
+  <h2 id="cta-h">Create your free account and save the places you care about.</h2>
+  <a class="btn btn-sun" href="register.html">Get started</a>
+</section>
+</div>
+</main>
+
+<footer class="osw-footer"><div class="container row-f">
+  <div><a class="osw-brand" href="index.html"><img src="assets/images/logo-icon.svg" alt="" width="34" height="34"><span><b>Osas</b><span>Weather</span></span></a><div class="osw-muted tw-mt-1">Your World. Your Weather. Your Forecast.</div></div>
+  <nav aria-label="Footer"><a href="#features">Features</a><a href="#about">About</a><a href="terms.html">Terms</a><a href="login.html">Log in</a></nav>
+  <div>Weather data by <a href="https://open-meteo.com/" rel="noopener noreferrer" target="_blank">Open-Meteo.com</a></div>
+</div></footer>
+<script type="module" src="assets/js/pages/landing.js"></script>
+</body></html>

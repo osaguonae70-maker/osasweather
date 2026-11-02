@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard.html
+Disallow: /favourites.html
+Disallow: /profile.html
+Disallow: /settings.html
+Disallow: /reset-password.html
+Disallow: /confirm-email.html
+# Replace the host below with your production domain.
+Sitemap: https://osasweather.com/sitemap.xml
