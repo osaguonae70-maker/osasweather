@@ -40,7 +40,7 @@ services:
       - key: ADMIN_FRONTEND_URL
         sync: false          # e.g. https://admin.osasweather.com
       - key: ALLOWED_ORIGINS
-        sync: false          # comma-separated: https://osasweather.com,https://admin.osasweather.com
+        sync: false          # comma-separated: https://osasweather-weather-app.vercel.app,https://osasweather-admin-app.vercel.app
       - key: COOKIE_SAMESITE
         value: lax
       - key: EMAIL_HOST
