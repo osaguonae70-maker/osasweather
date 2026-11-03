@@ -34,6 +34,7 @@ function loadConfig(env = process.env) {
       host: env.EMAIL_HOST, port: num(env.EMAIL_PORT, 587),
       user: env.EMAIL_USER, password: env.EMAIL_PASSWORD, from: env.EMAIL_FROM,
       secure: env.EMAIL_SECURE === 'true',
+      resendApiKey: env.RESEND_API_KEY,
     },
 
     cookies: {
