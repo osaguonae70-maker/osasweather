@@ -16,7 +16,6 @@ const SAFE = new Set(['GET', 'HEAD', 'OPTIONS']);
  */
 function createCsrf(config, realm) {
   const secret = `${config.csrfSecret}:${realm}`;
-  const allowedOrigin = realm === 'admin' ? config.adminFrontendUrl : config.frontendUrl;
   const tokenFor = (req) => hmac(secret, req.sessionID);
 
   const tokenHandler = (req, res) => {
@@ -28,8 +27,11 @@ function createCsrf(config, realm) {
   const protect = (req, _res, next) => {
     if (SAFE.has(req.method)) return next();
     const origin = req.get('origin');
-    if (origin && origin.replace(/\/$/, '') !== allowedOrigin) {
-      return next(E.forbidden('Request origin is not allowed.', 'ORIGIN_NOT_ALLOWED'));
+    if (origin) {
+      const normalizedOrigin = origin.replace(/\/$/, '');
+      if (!config.allowedOrigins.includes(normalizedOrigin)) {
+        return next(E.forbidden('Request origin is not allowed.', 'ORIGIN_NOT_ALLOWED'));
+      }
     }
     const sent = req.get('x-csrf-token');
     if (!sent || !safeEqual(sent, tokenFor(req))) {

@@ -39,6 +39,8 @@ services:
         sync: false          # e.g. https://osasweather.com
       - key: ADMIN_FRONTEND_URL
         sync: false          # e.g. https://admin.osasweather.com
+      - key: ALLOWED_ORIGINS
+        sync: false          # comma-separated: https://osasweather.com,https://admin.osasweather.com
       - key: COOKIE_SAMESITE
         value: lax
       - key: EMAIL_HOST

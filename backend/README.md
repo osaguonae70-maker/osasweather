@@ -36,7 +36,11 @@ State-changing requests need the `X-CSRF-Token` header (get it from `GET /api/cs
 
 ## Environment variables
 
-See [`.env.example`](.env.example). In production the app refuses to start with missing, short (<32), or identical secrets, or non-HTTPS frontend URLs. Rate-limit defaults can be tuned with `RL_*` variables. `DEV_LOG_RESET_LINKS=true` prints reset links to the console in development only (ignored in production).
+See [`.env.example`](.env.example). In production the app refuses to start with missing, short (<32), or identical secrets, or non-HTTPS frontend URLs.
+
+**CORS and CSRF:** Set `ALLOWED_ORIGINS` to a comma-separated list of all your frontend domains (e.g. `https://osasweather.com,https://admin.osasweather.com`). Localhost is required for development. The API uses an exact-match allow-list to support `credentials: true` safely.
+
+Rate-limit defaults can be tuned with `RL_*` variables. `DEV_LOG_RESET_LINKS=true` prints reset links to the console in development only (ignored in production).
 
 ## Notes
 

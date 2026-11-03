@@ -85,13 +85,12 @@ function loadConfig(env = process.env) {
     throw new Error(`Invalid configuration:\n - ${errors.join('\n - ')}`);
   }
 
+  // Allowed origins for CORS and CSRF protection.
+  // Includes the primary frontend/admin URLs and any extras from ALLOWED_ORIGINS (comma-separated).
   cfg.allowedOrigins = [...new Set([
     cfg.frontendUrl,
     cfg.adminFrontendUrl,
-    'https://osasweather-weather-di9zi465i-osaguonae70-4339s-projects.vercel.app',
-    'https://osasweather-weather-4suy1ouno-osaguonae70-4339s-projects.vercel.app',
-    'https://osasweather-admin-app.vercel.app',
-    ...list(env.EXTRA_ALLOWED_ORIGINS)
+    ...list(env.ALLOWED_ORIGINS || env.EXTRA_ALLOWED_ORIGINS)
   ])];
   return cfg;
 }
