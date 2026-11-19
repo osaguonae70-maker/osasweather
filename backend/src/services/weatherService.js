@@ -102,14 +102,14 @@ function createWeatherService({ pool, config, settingsService, fetchImpl = globa
       throw E.upstream('The weather service returned an unexpected response.', 'UPSTREAM_BAD_RESPONSE');
     }
     const c = raw.current;
-    const isDay = Date.now() / 1000 > c.sunrise && Date.now() / 1000 < c.sunset;
+    const isDay = c.dt >= c.sunrise && c.dt <= c.sunset;
     const visibility = num(c.visibility);
     const owmCond = (c.weather && c.weather[0]) || {};
     const cond = describeWeather(owmToWmo(owmCond.id), isDay, visibility);
 
     const hourly = raw.hourly.slice(0, 48).map((h) => {
       const hOwmCond = (h.weather && h.weather[0]) || {};
-      const hIsDay = h.dt > c.sunrise && h.dt < c.sunset; // approximation
+      const hIsDay = h.dt >= c.sunrise && h.dt <= c.sunset; // approximation
       return {
         time: new Date(h.dt * 1000).toISOString().slice(0, 16),
         temperature: num(h.temp),
