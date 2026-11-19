@@ -10,16 +10,16 @@ async function checkLogs() {
 
   try {
     const res = await pool.query(`
-      SELECT provider, endpoint, status_code, error_code, error_message, created_at 
+      SELECT provider, endpoint, status_code, success, error_code, error_message, created_at 
       FROM api_request_logs 
-      WHERE success = false 
+      WHERE created_at > now() - interval '1 hour'
       ORDER BY created_at DESC 
-      LIMIT 10
+      LIMIT 20
     `);
     
-    console.log('Recent API Errors:');
+    console.log('API Logs (Last 1 Hour):');
     if (res.rows.length === 0) {
-      console.log('No recent errors found in api_request_logs.');
+      console.log('No logs found in the last hour.');
     } else {
       console.table(res.rows);
     }

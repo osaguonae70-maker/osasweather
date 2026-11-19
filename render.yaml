@@ -51,9 +51,13 @@ services:
         sync: false
       - key: EMAIL_PASSWORD
         sync: false
+      - key: OPENWEATHERMAP_API_KEY
+        sync: false
       - key: GEOCODING_API_URL
-        value: https://geocoding-api.open-meteo.com/v1/search
+        value: https://api.openweathermap.org/geo/1.0/direct
       - key: REVERSE_GEOCODING_API_URL
-        value: https://api.bigdatacloud.net/data/reverse-geocode-client
+        value: https://api.openweathermap.org/geo/1.0/reverse
+      - key: WEATHER_API_BASE_URL
+        value: https://api.openweathermap.org/data/3.0/onecall
       - key: WEATHER_TIMEOUT_MS
         value: "8000"
