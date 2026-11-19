@@ -171,6 +171,31 @@ function createWeatherService({ pool, config, settingsService, fetchImpl = globa
     return results;
   }
 
-  return { getForecast, searchLocations };
+  async function reverseGeocode({ latitude, longitude }) {
+    const key = `rev|${latitude.toFixed(4)},${longitude.toFixed(4)}`;
+    const hit = geoCache.get(key);
+    if (hit && Date.now() - hit.at < GEO_TTL_MS) {
+      log({ provider: 'bigdatacloud', endpoint: 'reverse-geocode', success: true, cacheHit: true, durationMs: 0 });
+      return hit.value;
+    }
+
+    const params = new URLSearchParams({ latitude: String(latitude), longitude: String(longitude), localityLanguage: 'en' });
+    try {
+      const raw = await upstream('reverse-geocode', `${config.reverseGeocodingApiUrl}?${params}`);
+      const result = {
+        name: raw.city || raw.locality || raw.principalSubdivision || 'Current Location',
+        country: raw.countryName || null,
+        countryCode: raw.countryCode || null,
+        region: raw.principalSubdivision || null,
+      };
+      geoCache.set(key, result);
+      return result;
+    } catch (err) {
+      logger.warn('reverse_geocode_failed', { message: err.message, latitude, longitude });
+      return { name: 'Current Location', country: null, countryCode: null, region: null };
+    }
+  }
+
+  return { getForecast, searchLocations, reverseGeocode };
 }
 module.exports = { createWeatherService };

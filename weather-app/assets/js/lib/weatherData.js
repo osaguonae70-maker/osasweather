@@ -6,10 +6,22 @@ export const loadOverview = (loc, prefs = state.prefs) => api.get(`/weather/over
 })}`);
 
 const LAST = 'osw-last-location';
+const GEO_PREF = 'osw-geo-permission';
+
 export const rememberLocation = (loc) => { try { localStorage.setItem(LAST, JSON.stringify({ name: loc.name, country: loc.country || null, region: loc.region || null, latitude: loc.latitude, longitude: loc.longitude })); } catch { /* ignore */ } };
+
 export function lastLocation() {
   try { const v = JSON.parse(localStorage.getItem(LAST) || 'null'); return v && Number.isFinite(v.latitude) ? v : null; } catch { return null; }
 }
+
+export function getGeoPermission() {
+  try { return localStorage.getItem(GEO_PREF); } catch { return null; }
+}
+
+export function setGeoPermission(status) {
+  try { localStorage.setItem(GEO_PREF, status); } catch { /* ignore */ }
+}
+
 /** Best-effort starting place for visitors: the city component of the browser's IANA time zone. */
 export async function guessLocation() {
   try {
@@ -23,19 +35,37 @@ export async function guessLocation() {
   return null;
 }
 
-export function currentLocation() {
-  return new Promise((resolve) => {
-    if (!navigator.geolocation) { resolve(null); return; }
+export function currentLocation(options = { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }) {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) {
+      reject(new Error('GEOLOCATION_NOT_SUPPORTED'));
+      return;
+    }
+
     navigator.geolocation.getCurrentPosition(
-      ({ coords }) => resolve({
-        name: 'Current location',
-        country: null,
-        region: null,
-        latitude: coords.latitude,
-        longitude: coords.longitude,
-      }),
-      () => resolve(null),
-      { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
+      ({ coords }) => {
+        setGeoPermission('granted');
+        resolve({
+          name: 'Current Location',
+          country: null,
+          region: null,
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+        });
+      },
+      (err) => {
+        let code = 'GEOLOCATION_ERROR';
+        if (err.code === err.PERMISSION_DENIED) {
+          code = 'GEOLOCATION_DENIED';
+          setGeoPermission('denied');
+        } else if (err.code === err.POSITION_UNAVAILABLE) {
+          code = 'GEOLOCATION_UNAVAILABLE';
+        } else if (err.code === err.TIMEOUT) {
+          code = 'GEOLOCATION_TIMEOUT';
+        }
+        reject(new Error(code));
+      },
+      options
     );
   });
 }

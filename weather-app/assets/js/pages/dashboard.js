@@ -1,8 +1,8 @@
 import { api } from '../lib/api.js';
-import { $, esc, applyCss, toast, stateBlock, banner } from '../lib/ui.js';
+import { $, esc, applyCss, toast, stateBlock, banner, confirmDialog } from '../lib/ui.js';
 import { requireSession, state } from '../lib/session.js';
 import { mountShell } from '../lib/shell.js';
-import { loadOverview, lastLocation, rememberLocation, guessLocation, currentLocation } from '../lib/weatherData.js';
+import { loadOverview, lastLocation, rememberLocation, guessLocation, currentLocation, getGeoPermission, setGeoPermission } from '../lib/weatherData.js';
 import { renderSky, renderTimeline, renderWeek, renderHighlights } from '../lib/views.js';
 import { renderCharts } from '../lib/charts.js';
 import { localNow, timeAgo } from '../lib/format.js';
@@ -21,7 +21,34 @@ function fromUrl() {
 }
 
 async function resolveStart() {
-  return fromUrl() || state.prefs.defaultLocation || lastLocation() || (await currentLocation()) || (await guessLocation());
+  const urlLoc = fromUrl();
+  if (urlLoc) return urlLoc;
+
+  if (state.prefs.defaultLocation) return state.prefs.defaultLocation;
+  if (lastLocation()) return lastLocation();
+
+  const permission = getGeoPermission();
+  if (permission === 'denied') return await guessLocation();
+
+  if (!permission) {
+    const ok = await confirmDialog({
+      title: 'Enable location access?',
+      body: 'OsasWeather can automatically show you the local weather and forecasts based on your current position. We only use your location to fetch the weather and do not track you.',
+      confirmText: 'Allow access',
+    });
+    if (!ok) {
+      setGeoPermission('denied');
+      return await guessLocation();
+    }
+  }
+
+  try {
+    return await currentLocation();
+  } catch (err) {
+    // If geolocation fails (timeout, unavailable, or user denies at the browser level after clicking "Allow access")
+    // fall back to a guess based on timezone.
+    return await guessLocation();
+  }
 }
 
 function skeleton() {
@@ -44,7 +71,13 @@ function render() {
   const { meta } = data;
   root.innerHTML = `<div class="osw-stack">
     <div data-sky-slot></div>
-    <div class="d-flex flex-wrap justify-content-between gap-2 osw-muted tw-text-sm"><span>Updated ${esc(timeAgo(meta.fetchedAt))}</span><span>Weather data by Open-Meteo.com</span></div>
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 osw-muted tw-text-sm">
+      <div class="d-flex align-items-center gap-2">
+        <span>Updated ${esc(timeAgo(meta.fetchedAt))}</span>
+        <button type="button" class="btn btn-ghost btn-sm p-0 h-auto tw-text-blue-500 hover:tw-underline" data-refresh-geo title="Refresh your current location"><i class="bi bi-geo-alt" aria-hidden="true"></i> Use current location</button>
+      </div>
+      <span>Weather data by Open-Meteo.com</span>
+    </div>
     <div data-stale hidden></div>
     <section class="osw-section" aria-labelledby="h-hourly"><div class="osw-sec-head"><div><h2 id="h-hourly">Hourly forecast</h2><p>Temperature, chance of precipitation and wind</p></div><button type="button" class="btn btn-ghost btn-sm" data-hours-toggle>Show 48 hours</button></div><div class="osw-panel" data-timeline></div></section>
     <section class="osw-section" aria-labelledby="h-week"><div class="osw-sec-head"><div><h2 id="h-week">7-day forecast</h2><p>Bars share one temperature scale, so days compare at a glance</p></div></div><div class="osw-panel" data-week></div></section>
@@ -89,7 +122,14 @@ async function load(next) {
   try {
     const d = await loadOverview(loc);
     if (mine !== token) return; // a newer request superseded this one
-    data = d; rememberLocation(loc); render(); startClock();
+    data = d;
+    // Update location name/country if backend returned reverse-geocoding results (for "Current Location")
+    if (d.geo) {
+      loc.name = d.geo.name;
+      loc.country = d.geo.country;
+      loc.region = d.geo.region;
+    }
+    rememberLocation(loc); render(); startClock();
     document.title = `${loc.name} · OsasWeather`;
   } catch (e) {
     if (mine !== token) return;
@@ -97,8 +137,37 @@ async function load(next) {
   }
 }
 
+async function handleRefreshGeo() {
+  const mine = ++token;
+  skeleton();
+  try {
+    const next = await currentLocation({ enableHighAccuracy: true, timeout: 8000, maximumAge: 0 });
+    if (mine !== token) return;
+    load(next);
+  } catch (err) {
+    if (mine !== token) return;
+    let title = 'Location access failed';
+    let text = 'We couldn’t determine your current position. Check your device settings and try again.';
+    
+    if (err.message === 'GEOLOCATION_DENIED') {
+      title = 'Location access denied';
+      text = 'You have blocked location access for this site. Enable it in your browser settings to use this feature.';
+    } else if (err.message === 'GEOLOCATION_TIMEOUT') {
+      text = 'The location request timed out. Check your GPS signal and try again.';
+    }
+
+    root.innerHTML = stateBlock({
+      icon: 'bi-geo-alt',
+      title,
+      text,
+      actionHtml: '<div class="d-flex gap-2"><button type="button" class="btn btn-sun" data-refresh-geo>Retry</button><button type="button" class="btn btn-ghost" data-retry>Use last known location</button></div>'
+    });
+  }
+}
+
 root.addEventListener('click', async (e) => {
   if (e.target.closest('[data-retry]') || e.target.closest('[data-refresh]')) { if (loc) load(loc); return; }
+  if (e.target.closest('[data-refresh-geo]')) { handleRefreshGeo(); return; }
   if (e.target.closest('[data-hours-toggle]')) { hours = hours === 24 ? 48 : 24; paintTimeline(); return; }
   const fav = e.target.closest('[data-fav-toggle]');
   if (fav && data) {

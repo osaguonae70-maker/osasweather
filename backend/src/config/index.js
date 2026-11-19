@@ -28,6 +28,7 @@ function loadConfig(env = process.env) {
 
     weatherApiBaseUrl: env.WEATHER_API_BASE_URL || 'https://api.open-meteo.com/v1/forecast',
     geocodingApiUrl: env.GEOCODING_API_URL || 'https://geocoding-api.open-meteo.com/v1/search',
+    reverseGeocodingApiUrl: env.REVERSE_GEOCODING_API_URL || 'https://api.bigdatacloud.net/data/reverse-geocode-client',
     weatherTimeoutMs: num(env.WEATHER_TIMEOUT_MS, 8000),
 
     email: {
