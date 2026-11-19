@@ -46,15 +46,41 @@ function createWeatherService({ pool, config, settingsService, fetchImpl = globa
       try { body = await res.json(); } catch { /* handled below */ }
       if (!res.ok || !body || body.error === true) {
         const code = res.status === 429 ? 'UPSTREAM_RATE_LIMITED' : 'UPSTREAM_ERROR';
-        await log({ provider: 'open-meteo', endpoint, statusCode, success: false, durationMs: Date.now() - started, errorCode: code });
-        throw E.upstream('The weather service returned an error. Please try again shortly.', code);
+        const message = (body && body.reason) || (body && body.message) || 'The weather service returned an error. Please try again shortly.';
+        
+        await log({ 
+          provider: endpoint === 'reverse-geocode' ? 'bigdatacloud' : 'open-meteo', 
+          endpoint, 
+          statusCode, 
+          success: false, 
+          durationMs: Date.now() - started, 
+          errorCode: code,
+          errorMessage: message
+        });
+
+        if (res.status === 429) {
+          logger.error('upstream_rate_limited', { provider: endpoint, url });
+          throw E.upstream('Too many requests. Please wait a moment and try again.', 'UPSTREAM_RATE_LIMITED');
+        }
+        throw E.upstream(message, code);
       }
       await log({ provider: 'open-meteo', endpoint, statusCode, success: true, durationMs: Date.now() - started });
       return body;
     } catch (err) {
       if (err.status) throw err; // already mapped
       const timedOut = err && (err.name === 'TimeoutError' || err.name === 'AbortError');
-      await log({ provider: 'open-meteo', endpoint, statusCode, success: false, durationMs: Date.now() - started, errorCode: timedOut ? 'TIMEOUT' : 'NETWORK' });
+      const code = timedOut ? 'TIMEOUT' : 'NETWORK';
+      
+      await log({ 
+        provider: endpoint === 'reverse-geocode' ? 'bigdatacloud' : 'open-meteo',
+        endpoint, 
+        statusCode, 
+        success: false, 
+        durationMs: Date.now() - started, 
+        errorCode: code,
+        errorMessage: err.message
+      });
+
       throw timedOut ? E.timeout() : E.upstream('Could not reach the weather service.', 'UPSTREAM_UNREACHABLE');
     }
   }

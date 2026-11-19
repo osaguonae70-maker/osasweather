@@ -14,12 +14,16 @@ function createWeatherController({ weatherService }) {
     daily: asyncHandler(async (req, res) => { const f = await forecast(req); cacheable(res); ok(res, { ...base(f), daily: f.daily }); }),
     // One round-trip for the dashboard (same cached upstream response).
     overview: asyncHandler(async (req, res) => {
-      const f = await forecast(req);
       const { lat, lon } = req.validatedQuery;
-      let geo = null;
-      if (lat !== undefined && lon !== undefined) {
-        geo = await weatherService.reverseGeocode({ latitude: lat, longitude: lon });
-      }
+
+      // Run forecast and reverse geocoding in parallel.
+      const forecastPromise = forecast(req);
+      const geoPromise = (lat !== undefined && lon !== undefined)
+        ? weatherService.reverseGeocode({ latitude: lat, longitude: lon })
+        : Promise.resolve(null);
+
+      const [f, geo] = await Promise.all([forecastPromise, geoPromise]);
+
       cacheable(res);
       ok(res, { ...base(f), current: f.current, today: f.today, hourly: f.hourly, daily: f.daily, geo });
     }),
