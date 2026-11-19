@@ -51,5 +51,9 @@ services:
         sync: false
       - key: EMAIL_PASSWORD
         sync: false
-      - key: EMAIL_FROM
-        sync: false
+      - key: GEOCODING_API_URL
+        value: https://geocoding-api.open-meteo.com/v1/search
+      - key: REVERSE_GEOCODING_API_URL
+        value: https://api.bigdatacloud.net/data/reverse-geocode-client
+      - key: WEATHER_TIMEOUT_MS
+        value: "8000"
