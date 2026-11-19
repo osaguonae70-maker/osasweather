@@ -53,11 +53,13 @@ services:
         sync: false
       - key: OPENWEATHERMAP_API_KEY
         sync: false
+      - key: WEATHER_PROVIDER
+        value: open-meteo
       - key: GEOCODING_API_URL
-        value: https://api.openweathermap.org/geo/1.0/direct
+        sync: false          # defaults based on WEATHER_PROVIDER if empty
       - key: REVERSE_GEOCODING_API_URL
-        value: https://api.openweathermap.org/geo/1.0/reverse
+        sync: false          # defaults based on WEATHER_PROVIDER if empty
       - key: WEATHER_API_BASE_URL
-        value: https://api.openweathermap.org/data/3.0/onecall
+        sync: false          # defaults based on WEATHER_PROVIDER if empty
       - key: WEATHER_TIMEOUT_MS
         value: "8000"

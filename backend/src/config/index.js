@@ -14,35 +14,38 @@ function loadConfig(env = process.env) {
   const list = (v) => (v || '').split(',').map((s) => s.trim().replace(/\/$/, '')).filter(Boolean);
 
   const owmKey = env.OPENWEATHERMAP_API_KEY;
-    const weatherApiBaseUrl = (owmKey && (!env.WEATHER_API_BASE_URL || env.WEATHER_API_BASE_URL.includes('open-meteo')))
-      ? 'https://api.openweathermap.org/data/3.0/onecall'
-      : (env.WEATHER_API_BASE_URL || 'https://api.openweathermap.org/data/3.0/onecall');
+  const weatherProvider = env.WEATHER_PROVIDER || (owmKey ? 'openweathermap' : 'open-meteo');
 
-    const geocodingApiUrl = (owmKey && (!env.GEOCODING_API_URL || env.GEOCODING_API_URL.includes('open-meteo')))
-      ? 'https://api.openweathermap.org/geo/1.0/direct'
-      : (env.GEOCODING_API_URL || 'https://api.openweathermap.org/geo/1.0/direct');
+  const weatherApiBaseUrl = (weatherProvider === 'openweathermap')
+    ? 'https://api.openweathermap.org/data/3.0/onecall'
+    : (env.WEATHER_API_BASE_URL || 'https://api.open-meteo.com/v1/forecast');
 
-    const reverseGeocodingApiUrl = (owmKey && (!env.REVERSE_GEOCODING_API_URL || env.REVERSE_GEOCODING_API_URL.includes('open-meteo')))
-      ? 'https://api.openweathermap.org/geo/1.0/reverse'
-      : (env.REVERSE_GEOCODING_API_URL || 'https://api.openweathermap.org/geo/1.0/reverse');
+  const geocodingApiUrl = (weatherProvider === 'openweathermap')
+    ? 'https://api.openweathermap.org/geo/1.0/direct'
+    : (env.GEOCODING_API_URL || 'https://geocoding-api.open-meteo.com/v1/search');
 
-    const cfg = {
-      nodeEnv, isProd, isTest,
-      port: num(env.PORT, 5000),
-      databaseUrl: env.DATABASE_URL,
-      databaseSsl: env.DATABASE_SSL === 'true',
+  const reverseGeocodingApiUrl = (weatherProvider === 'openweathermap')
+    ? 'https://api.openweathermap.org/geo/1.0/reverse'
+    : (env.REVERSE_GEOCODING_API_URL || 'https://nominatim.openstreetmap.org/reverse');
 
-      sessionSecret: env.SESSION_SECRET,
-      adminSessionSecret: env.ADMIN_SESSION_SECRET,
-      csrfSecret: env.CSRF_SECRET,
+  const cfg = {
+    nodeEnv, isProd, isTest,
+    port: num(env.PORT, 5000),
+    databaseUrl: env.DATABASE_URL,
+    databaseSsl: env.DATABASE_SSL === 'true',
 
-      frontendUrl: (env.FRONTEND_URL || 'http://localhost:5500').replace(/\/$/, ''),
-      adminFrontendUrl: (env.ADMIN_FRONTEND_URL || 'http://localhost:5501').replace(/\/$/, ''),
+    sessionSecret: env.SESSION_SECRET,
+    adminSessionSecret: env.ADMIN_SESSION_SECRET,
+    csrfSecret: env.CSRF_SECRET,
 
-      weatherApiBaseUrl,
-      openweathermapApiKey: owmKey,
-      geocodingApiUrl,
-      reverseGeocodingApiUrl,
+    frontendUrl: (env.FRONTEND_URL || 'http://localhost:5500').replace(/\/$/, ''),
+    adminFrontendUrl: (env.ADMIN_FRONTEND_URL || 'http://localhost:5501').replace(/\/$/, ''),
+
+    weatherProvider,
+    weatherApiBaseUrl,
+    openweathermapApiKey: owmKey,
+    geocodingApiUrl,
+    reverseGeocodingApiUrl,
     weatherTimeoutMs: num(env.WEATHER_TIMEOUT_MS, 8000),
 
     email: {

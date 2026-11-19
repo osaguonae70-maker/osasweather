@@ -9,6 +9,7 @@ function createAuthController({ pool, config, authService, csrf }) {
     user: publicUser(user),
     preferences: publicPreferences(await preferenceRepo.get(pool, user.id)),
     csrfToken: csrf.tokenFor(req),
+    weatherProvider: config.weatherProvider,
   });
 
   return {

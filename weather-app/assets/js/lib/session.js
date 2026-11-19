@@ -4,6 +4,7 @@ import { syncThemeFromServer } from './theme.js';
 export const state = {
   user: null,
   prefs: { temperatureUnit: 'celsius', windSpeedUnit: 'kmh', defaultLocation: null, theme: 'system' },
+  weatherProvider: 'open-meteo',
 };
 
 /** Returns the session ({user, preferences}) or null when signed out / suspended. Never trusts local state. */
@@ -16,6 +17,7 @@ export async function loadSession() {
     const d = await api.get('/auth/me');
     state.user = d.user;
     Object.assign(state.prefs, d.preferences || {});
+    state.weatherProvider = d.weatherProvider || 'open-meteo';
     syncThemeFromServer(state.prefs.theme); setSessionHint(true);
     return d;
   } catch (e) {
