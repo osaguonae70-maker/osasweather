@@ -10,9 +10,9 @@ const HOURLY_VARS = ['temperature_2m', 'precipitation_probability', 'weather_cod
 const DAILY_VARS = ['weather_code', 'temperature_2m_max', 'temperature_2m_min', 'sunrise', 'sunset', 'uv_index_max',
   'precipitation_probability_max', 'precipitation_sum', 'wind_speed_10m_max'];
 
-const STALE_MAX_MS = 3 * 3600 * 1000;
-const MAX_ENTRIES = 500;
-const GEO_TTL_MS = 24 * 3600 * 1000;
+const STALE_MAX_MS = 24 * 3600 * 1000; // 24 hours
+const MAX_ENTRIES = 1000;
+const GEO_TTL_MS = 7 * 24 * 3600 * 1000; // 7 days
 
 /** Small TTL cache with insertion-order eviction. */
 class TtlCache {
@@ -59,9 +59,9 @@ function createWeatherService({ pool, config, settingsService, fetchImpl = globa
         });
 
         if (res.status === 429) {
-          logger.error('upstream_rate_limited', { provider: endpoint, url });
-          throw E.upstream('Too many requests. Please wait a moment and try again.', 'UPSTREAM_RATE_LIMITED');
-        }
+           logger.error('upstream_rate_limited', { provider: endpoint, url, message });
+           throw E.upstream(message, 'UPSTREAM_RATE_LIMITED');
+         }
         throw E.upstream(message, code);
       }
       await log({ provider: 'open-meteo', endpoint, statusCode, success: true, durationMs: Date.now() - started });

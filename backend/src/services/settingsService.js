@@ -2,7 +2,7 @@
 const settingsRepo = require('../repositories/settingsRepository');
 const { withTransaction } = require('../config/database');
 
-const DEFAULTS = { registrationsOpen: true, weatherCacheMinutes: 10 };
+const DEFAULTS = { registrationsOpen: true, weatherCacheMinutes: 30 };
 const KEYS = { registrationsOpen: 'registrations_open', weatherCacheMinutes: 'weather_cache_minutes' };
 const MEMO_MS = 15 * 1000;
 
