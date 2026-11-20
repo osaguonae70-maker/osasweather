@@ -96,19 +96,28 @@ async function fetchOpenMeteoDirect(loc, prefs) {
 
 export const loadOverview = async (loc, prefs = state.prefs) => {
   // If using Open-Meteo, try to fetch directly first to bypass Render IP rate limits.
-  if (state.weatherProvider === 'open-meteo') {
+  // We also try direct fetch if we haven't confirmed a provider yet, to be safe.
+  if (state.weatherProvider === 'open-meteo' || !state.weatherProvider) {
     try {
       return await fetchOpenMeteoDirect(loc, prefs);
     } catch (err) {
       console.warn('Direct Open-Meteo fetch failed, falling back to backend:', err.message);
-      // Fall through to backend call
     }
   }
 
-  // Standard backend call (for OpenWeatherMap or as fallback)
-  return api.get(`/weather/overview?${new URLSearchParams({
-    lat: loc.latitude, lon: loc.longitude, temperatureUnit: prefs.temperatureUnit, windSpeedUnit: prefs.windSpeedUnit,
-  })}`);
+  try {
+    return await api.get(`/weather/overview?${new URLSearchParams({
+      lat: loc.latitude, lon: loc.longitude, temperatureUnit: prefs.temperatureUnit, windSpeedUnit: prefs.windSpeedUnit,
+    })}`);
+  } catch (err) {
+    // If the backend fails with a subscription error (OpenWeatherMap issue), 
+    // try one last time to fetch Open-Meteo directly as a fallback.
+    if (err.message && err.message.toLowerCase().includes('subscription') && state.weatherProvider !== 'open-meteo') {
+      console.warn('Backend subscription error detected, trying direct Open-Meteo fallback...');
+      return fetchOpenMeteoDirect(loc, prefs);
+    }
+    throw err;
+  }
 };
 
 const LAST = 'osw-last-location';
