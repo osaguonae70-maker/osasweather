@@ -14,7 +14,10 @@ function loadConfig(env = process.env) {
   const list = (v) => (v || '').split(',').map((s) => s.trim().replace(/\/$/, '')).filter(Boolean);
 
   const owmKey = env.OPENWEATHERMAP_API_KEY;
-  const weatherProvider = env.WEATHER_PROVIDER || (owmKey ? 'openweathermap' : 'open-meteo');
+  // Default to Open-Meteo. OpenWeatherMap is only used when explicitly selected via
+  // WEATHER_PROVIDER=openweathermap, so a leftover OPENWEATHERMAP_API_KEY on the host
+  // can no longer silently switch the provider (and break weather with a 502).
+  const weatherProvider = env.WEATHER_PROVIDER || 'open-meteo';
 
   const weatherApiBaseUrl = (weatherProvider === 'openweathermap')
     ? 'https://api.openweathermap.org/data/3.0/onecall'
