@@ -18,18 +18,22 @@ function loadConfig(env = process.env) {
   // WEATHER_PROVIDER=openweathermap, so a leftover OPENWEATHERMAP_API_KEY on the host
   // can no longer silently switch the provider (and break weather with a 502).
   const weatherProvider = env.WEATHER_PROVIDER || 'open-meteo';
+  const isOwm = weatherProvider === 'openweathermap';
 
-  const weatherApiBaseUrl = (weatherProvider === 'openweathermap')
+  // Endpoints are derived from the provider, NOT from env overrides. Stale dashboard
+  // overrides (e.g. WEATHER_API_BASE_URL still pointing at OpenWeatherMap) previously
+  // survived redeploys and silently routed Open-Meteo traffic to OpenWeatherMap.
+  const weatherApiBaseUrl = isOwm
     ? 'https://api.openweathermap.org/data/3.0/onecall'
-    : (env.WEATHER_API_BASE_URL || 'https://api.open-meteo.com/v1/forecast');
+    : 'https://api.open-meteo.com/v1/forecast';
 
-  const geocodingApiUrl = (weatherProvider === 'openweathermap')
+  const geocodingApiUrl = isOwm
     ? 'https://api.openweathermap.org/geo/1.0/direct'
-    : (env.GEOCODING_API_URL || 'https://geocoding-api.open-meteo.com/v1/search');
+    : 'https://geocoding-api.open-meteo.com/v1/search';
 
-  const reverseGeocodingApiUrl = (weatherProvider === 'openweathermap')
+  const reverseGeocodingApiUrl = isOwm
     ? 'https://api.openweathermap.org/geo/1.0/reverse'
-    : (env.REVERSE_GEOCODING_API_URL || 'https://nominatim.openstreetmap.org/reverse');
+    : 'https://nominatim.openstreetmap.org/reverse';
 
   const cfg = {
     nodeEnv, isProd, isTest,
